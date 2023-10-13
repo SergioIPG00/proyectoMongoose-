@@ -1,6 +1,18 @@
 const Posts = require("../models/posts.model");
+const jwt = require('jsonwebtoken');
 
 module.exports.create = (req, res) =>{
+
+    try {
+        const token = req.headers.authorization.split(' ')[1];
+        const decodedToken = jwt.verify(token, 'YOUR_SECRET_KEY');
+        req.userData = decodedToken;
+    } catch (error) {
+        return res.status(401).json({
+            message: 'Auth failed'
+        });
+    }
+
     console.log(req.body);
     Posts.create(req.body)
     .then((post) => {
@@ -12,6 +24,16 @@ module.exports.create = (req, res) =>{
 };
 
 module.exports.list = (req, res) =>{
+    try {
+        const token = req.headers.authorization.split(' ')[1];
+        const decodedToken = jwt.verify(token, 'YOUR_SECRET_KEY');
+        req.userData = decodedToken;
+    } catch (error) {
+        return res.status(401).json({
+            message: 'Auth failed'
+        });
+    }
+
     Posts.find({})
     .then(posts => {
         res.status(200).json(posts);
@@ -22,6 +44,16 @@ module.exports.list = (req, res) =>{
 };
 
 module.exports.detail = (req, res) =>{
+    try {
+        const token = req.headers.authorization.split(' ')[1];
+        const decodedToken = jwt.verify(token, 'YOUR_SECRET_KEY');
+        req.userData = decodedToken;
+    } catch (error) {
+        return res.status(401).json({
+            message: 'Auth failed'
+        });
+    }
+
     Posts.findById(req.params.id)
     .then(post => {
         if (!post) {
@@ -35,6 +67,16 @@ module.exports.detail = (req, res) =>{
 };
 
 module.exports.update = (req, res) =>{
+    try {
+        const token = req.headers.authorization.split(' ')[1];
+        const decodedToken = jwt.verify(token, 'YOUR_SECRET_KEY');
+        req.userData = decodedToken;
+    } catch (error) {
+        return res.status(401).json({
+            message: 'Auth failed'
+        });
+    }
+
     Posts.findByIdAndUpdate(req.params.id, req.body, { new: true })
     .then(post => {
         if (!post) {
@@ -48,6 +90,16 @@ module.exports.update = (req, res) =>{
 };
 
 module.exports.delete = (req, res) =>{
+    try {
+        const token = req.headers.authorization.split(' ')[1];
+        const decodedToken = jwt.verify(token, 'YOUR_SECRET_KEY');
+        req.userData = decodedToken;
+    } catch (error) {
+        return res.status(401).json({
+            message: 'Auth failed'
+        });
+    }
+    
     Posts.findByIdAndDelete(req.params.id)
     .then(post => {
         if (!post) {
