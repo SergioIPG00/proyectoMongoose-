@@ -5,7 +5,7 @@ module.exports.create = (req, res) =>{
 
     try {
         const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, 'YOUR_SECRET_KEY');
+        const decodedToken = jwt.verify(token, 'KEY');
         req.userData = decodedToken;
     } catch (error) {
         return res.status(401).json({
@@ -26,7 +26,7 @@ module.exports.create = (req, res) =>{
 module.exports.list = (req, res) =>{
     try {
         const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, 'YOUR_SECRET_KEY');
+        const decodedToken = jwt.verify(token, 'KEY');
         req.userData = decodedToken;
     } catch (error) {
         return res.status(401).json({
@@ -46,7 +46,7 @@ module.exports.list = (req, res) =>{
 module.exports.detail = (req, res) =>{
     try {
         const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, 'YOUR_SECRET_KEY');
+        const decodedToken = jwt.verify(token, 'KEY');
         req.userData = decodedToken;
     } catch (error) {
         return res.status(401).json({
@@ -69,7 +69,7 @@ module.exports.detail = (req, res) =>{
 module.exports.update = (req, res) =>{
     try {
         const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, 'YOUR_SECRET_KEY');
+        const decodedToken = jwt.verify(token, 'KEY');
         req.userData = decodedToken;
     } catch (error) {
         return res.status(401).json({
@@ -92,7 +92,7 @@ module.exports.update = (req, res) =>{
 module.exports.delete = (req, res) =>{
     try {
         const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, 'YOUR_SECRET_KEY');
+        const decodedToken = jwt.verify(token, 'KEY');
         req.userData = decodedToken;
     } catch (error) {
         return res.status(401).json({

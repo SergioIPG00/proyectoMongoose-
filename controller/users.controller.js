@@ -43,7 +43,7 @@ module.exports.login = (req, res) =>{
             if (result) {
                 const token = jwt.sign(
                     { email: user.email, userId: user._id },
-                    'YOUR_SECRET_KEY', // Asegúrate de usar una llave secreta segura y preferiblemente almacenada en variables de entorno
+                    'KEY', // Asegúrate de usar una llave secreta segura y preferiblemente almacenada en variables de entorno
                     { expiresIn: '1h' }
                 );
 
