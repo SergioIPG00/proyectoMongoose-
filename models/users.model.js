@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-// Esquema del modelo "User"
 const userSchema = new Schema({
     name: {
         type: String,
@@ -11,8 +10,8 @@ const userSchema = new Schema({
     email: {
         type: String,
         required: [true, 'Email is required'],
-        unique: true, // asegura que el email sea único en la base de datos
-        match: [ // valida que el email tenga un formato correcto
+        unique: true,
+        match: [ 
             /^[\w.-]+@[\w.-]+\.\w+$/,
             'Please enter a valid email'
         ]
@@ -21,8 +20,7 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: [true, 'Password is required']
-        // Puedes agregar más validaciones dependiendo de tus requerimientos, 
-        // como una longitud mínima, caracteres especiales, etc.
+    
     },
 
     bio: String,
@@ -34,7 +32,7 @@ const userSchema = new Schema({
 
     createdAt: {
         type: Date,
-        default: Date.now // Se establece la fecha actual por defecto
+        default: Date.now 
     },
 
     updatedAt: {

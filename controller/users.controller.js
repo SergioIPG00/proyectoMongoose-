@@ -17,8 +17,12 @@ module.exports.create= (req, res) =>{
 
         user.save()
         .then(result => {
+            const host = req.get('host');
+            const protocol = req.protocol; 
+            const activationUrl = `${protocol}://${host}/api/users/activate/${result._id}`;
             res.status(201).json({
                 message: 'User created',
+                activationUrl: activationUrl,
                 user: result
             });
         })
@@ -36,6 +40,9 @@ module.exports.login = (req, res) =>{
         }
 
         bcrypt.compare(req.body.password, user.password, (err, result) => {
+            if (!user.active) {
+                return res.status(401).json({ message: 'Please activate your account before logging in.' });
+            }
             if (err) {
                 return res.status(401).json({ message: 'Auth failed' });
             }
@@ -43,7 +50,7 @@ module.exports.login = (req, res) =>{
             if (result) {
                 const token = jwt.sign(
                     { email: user.email, userId: user._id },
-                    'KEY', // Asegúrate de usar una llave secreta segura y preferiblemente almacenada en variables de entorno
+                    'KEY',
                     { expiresIn: '1h' }
                 );
 
@@ -58,5 +65,20 @@ module.exports.login = (req, res) =>{
     })
     .catch(error => {
         res.status(400).json({ error: error.message });
+    });
+};
+
+module.exports.activivate = (req, res) => {
+    const userId = req.params.userId;
+
+    User.findByIdAndUpdate(userId, { active: true }, { new: true })
+    .then(user => {
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json({ message: 'Account activated successfully' });
+    })
+    .catch(error => {
+        res.status(500).json({ error: error.message });
     });
 };

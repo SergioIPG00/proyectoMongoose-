@@ -14,5 +14,6 @@ router.patch("/api/posts/:id", posts.update);
 router.delete("/api/posts/:id", posts.delete);
 router.post("/api/users", users.create);
 router.post("/api/login", users.login);
+router.get("/api/users/activate/:userId", users.activivate)
 
 module.exports = router;
